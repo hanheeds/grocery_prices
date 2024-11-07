@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grocery Price Index</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <h1>Grocery Price Index</h1>
+    <h2>Price Changes Since January 20, 2025</h2>
+    <div>
+      <canvas id="priceChart"></canvas>
+    </div>
+    <script>
+      const priceData = {{ price_changes | tojson }};
+      const ctx = document.getElementById('priceChart').getContext('2d');
+      const chartLabels = Object.keys(priceData);
+      const chartData = Object.values(priceData);
+
+      new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: chartLabels,
+              datasets: [{
+                  label: 'Price Change (%)',
+                  data: chartData,
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+    </script>
+  </body>
+</html>
